@@ -9,7 +9,8 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 
 export default function App() {
-  const basename = import.meta.env.PROD ? '/Bonsaicopy' : '/';
+  // Use Vite's BASE_URL which is set from vite.config.ts base option
+  const basename = import.meta.env.BASE_URL;
   
   return (
     <>
@@ -42,7 +43,8 @@ function RedirectHandler() {
     if (redirectPath) {
       sessionStorage.removeItem('redirectPath');
       // Remove the basename from the path before navigating
-      const cleanPath = redirectPath.replace('/Bonsaicopy', '');
+      const basePath = import.meta.env.BASE_URL;
+      const cleanPath = redirectPath.replace(basePath, '/');
       navigate(cleanPath, { replace: true });
     }
   }, [navigate]);

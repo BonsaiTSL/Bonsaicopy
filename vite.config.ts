@@ -3,8 +3,14 @@
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
 
-export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/Bonsaicopy/' : '/',
+export default defineConfig(({ mode }) => {
+  // Use VITE_BASE_PATH env variable, or default based on mode
+  // For custom domain: set VITE_BASE_PATH='/' when building
+  // For GitHub Pages subdirectory: set VITE_BASE_PATH='/Bonsaicopy/' or leave unset
+  const base = process.env.VITE_BASE_PATH || (mode === 'production' ? '/Bonsaicopy/' : '/');
+  
+  return {
+  base,
   publicDir: 'src/public',
   plugins: [react()],
   resolve: {
@@ -60,4 +66,5 @@ export default defineConfig(({ mode }) => ({
     port: 3000,
     open: true,
   },
-}));
+};
+});

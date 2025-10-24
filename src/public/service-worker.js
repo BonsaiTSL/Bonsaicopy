@@ -1,12 +1,21 @@
 const CACHE_NAME = 'bonsai-v1';
 
+// Dynamically determine the base path from the service worker's scope
+// This allows the app to work on any domain or subdirectory
+function getBasePath() {
+  const scope = self.registration.scope;
+  const url = new URL(scope);
+  return url.pathname;
+}
+
 // Install event - cache essential resources
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
+      const basePath = getBasePath();
       return cache.addAll([
-        '/',
-        '/index.html'
+        basePath,
+        `${basePath}index.html`
       ]);
     })
   );
@@ -31,12 +40,14 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+  const basePath = getBasePath();
+  
   // For navigation requests (HTML pages), always return index.html
   // This enables client-side routing with clean URLs
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return caches.match('/index.html');
+        return caches.match(`${basePath}index.html`);
       })
     );
     return;

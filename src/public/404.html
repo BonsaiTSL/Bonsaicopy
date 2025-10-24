@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <script>
       // Redirect to index.html with the path stored in sessionStorage
+      // Automatically detect the base path from the current location
       sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
-      location.replace('/Bonsaicopy/');
+      
+      // Get the base path by finding where /404.html is located
+      const currentPath = location.pathname;
+      const basePath = currentPath.substring(0, currentPath.lastIndexOf('/404.html'));
+      
+      // Redirect to the base path (root of the app)
+      location.replace(basePath || '/');
     </script>
     <title>Redirecting...</title>
   </head>

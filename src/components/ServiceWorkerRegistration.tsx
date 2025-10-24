@@ -4,9 +4,9 @@ export default function ServiceWorkerRegistration() {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        // Use the base path for production
-        const basePath = import.meta.env.PROD ? '/Bonsaicopy' : '';
-        const swPath = `${basePath}/service-worker.js`;
+        // Use Vite's BASE_URL which automatically uses the correct path
+        const basePath = import.meta.env.BASE_URL;
+        const swPath = `${basePath}service-worker.js`;
         
         navigator.serviceWorker
           .register(swPath)
