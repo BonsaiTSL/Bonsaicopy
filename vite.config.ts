@@ -3,8 +3,8 @@
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
 
-export default defineConfig({
-  base: '/Bonsaicopy/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/Bonsaicopy/' : '/',
   plugins: [react()],
   resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -55,8 +55,8 @@ export default defineConfig({
       target: 'esnext',
       outDir: 'build',
     },
-    server: {
-      port: 3000,
-      open: true,
-    },
-  });
+  server: {
+    port: 3000,
+    open: true,
+  },
+}));

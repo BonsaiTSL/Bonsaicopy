@@ -8,10 +8,12 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 
 export default function App() {
+  const basename = import.meta.env.PROD ? '/Bonsaicopy' : '/';
+  
   return (
     <>
       <ServiceWorkerRegistration />
-      <Router basename="/Bonsaicopy">
+      <Router basename={basename}>
         <ScrollToTop />
         <div className="min-h-screen bg-background">
           <Routes>
