@@ -2,20 +2,30 @@
   "name": "Bonsai",
   "short_name": "Bonsai",
   "description": "Technology, when done right, disappears.",
-  "start_url": "/",
+  "start_url": "/Bonsaicopy/",
+  "scope": "/Bonsaicopy/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
+  "orientation": "any",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/Bonsaicopy/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/Bonsaicopy/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Bonsaicopy/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
