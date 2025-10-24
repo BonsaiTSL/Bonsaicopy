@@ -121,6 +121,12 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext',
       outDir: 'build',
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          notFound: path.resolve(__dirname, 'src/public/404.html')
+        }
+      }
     },
     server: {
       port: 3000,
@@ -222,39 +228,36 @@ Empty file (prevents GitHub Pages from ignoring underscore-prefixed files)
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <script>
-      // Store the requested path for React Router to handle after redirect
-      var path = window.location.pathname;
-      sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
-      
-      // Extract base path from URL
-      // For GitHub Pages subdirectory: /repo-name/some-route → redirect to /repo-name/
-      // For custom domain: /some-route → redirect to /
-      var segments = path.split('/').filter(function(segment) { return segment !== ''; });
-      
-      // If we have segments, assume first segment is the repo name (for GitHub Pages subdirectory)
-      var basePath = segments.length > 0 && !window.location.hostname.includes('localhost')
-        ? '/' + segments[0] + '/'
-        : '/';
-      
-      // For custom domains (no subdirectory), redirect to root
-      if (window.location.hostname !== window.location.hostname.replace(/\.github\.io$/, '')) {
-        // It's a custom domain if hostname doesn't end with .github.io
-        basePath = '/';
-      } else if (window.location.hostname.endsWith('.github.io') && segments.length > 0) {
-        // It's GitHub Pages subdirectory deployment
-        basePath = '/' + segments[0] + '/';
-      }
-      
-      window.location.replace(basePath);
+        // Store the requested path for React Router to handle after redirect
+        var path = window.location.pathname;
+        sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
+        
+        // Dynamically determine base path
+        var segments = path.split('/').filter(function(segment) { return segment !== ''; });
+        
+        // For GitHub Pages subdirectory: /repo-name/some-route → redirect to /repo-name/
+        // For custom domain: /some-route → redirect to /
+        var basePath = segments.length > 0 && !window.location.hostname.includes('localhost')
+            ? '/' + segments[0] + '/'
+            : '/';
+        
+        // For custom domains (no subdirectory), redirect to root
+        if (!window.location.hostname.endsWith('.github.io')) {
+            basePath = '/';
+        } else if (window.location.hostname.endsWith('.github.io') && segments.length > 0) {
+            // It's GitHub Pages subdirectory deployment
+            basePath = '/' + segments[0] + '/';
+        }
+        
+        window.location.replace(basePath);
     </script>
     <title>Redirecting...</title>
-  </head>
-  <body>
-    Redirecting...
-  </body>
+</head>
+<body>
+</body>
 </html>
 ```
 
@@ -541,6 +544,7 @@ If deploying to a custom domain (e.g., `yourdomain.com`):
 ### 404 on Routes
 - Ensure `404.html` exists in `src/public/`
 - Check that `RedirectHandler` component is included in App.tsx
+- **Important**: The `rollupOptions` in `vite.config.ts` is required for GitHub Pages to serve the custom 404.html file
 
 ### Service Worker Not Registering
 - Check console for errors

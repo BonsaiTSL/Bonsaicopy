@@ -63,4 +63,6 @@ The site intelligently adapts to its environment:
 - **Local Development**: Always uses `/` (root) for localhost
 
 All paths (manifest, service worker, routing, 404 redirects) dynamically adjust to work anywhere!
+
+**Note**: The `rollupOptions` configuration in `vite.config.ts` is essential for GitHub Pages to properly serve the custom 404.html file for client-side routing.
   
