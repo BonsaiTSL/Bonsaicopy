@@ -2,25 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        h1 { color: #333; }
-        p { color: #666; }
-    </style>
-</head>
-<body>
-    <p>Redirecting...</p>
     <script>
         // Store the requested path for React Router to handle after redirect
         var path = window.location.pathname;
         sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
         
-        // Redirect to the base path
-        var basePath = '/bonsai-site/';
+        // Dynamically determine base path
+        var segments = path.split('/').filter(function(segment) { return segment !== ''; });
+        
+        // For GitHub Pages subdirectory: /repo-name/some-route → redirect to /repo-name/
+        // For custom domain: /some-route → redirect to /
+        var basePath = segments.length > 0 && !window.location.hostname.includes('localhost')
+            ? '/' + segments[0] + '/'
+            : '/';
+        
+        // For custom domains (no subdirectory), redirect to root
+        if (!window.location.hostname.endsWith('.github.io')) {
+            basePath = '/';
+        } else if (window.location.hostname.endsWith('.github.io') && segments.length > 0) {
+            // It's GitHub Pages subdirectory deployment
+            basePath = '/' + segments[0] + '/';
+        }
+        
         window.location.replace(basePath);
     </script>
+    <title>Redirecting...</title>
+</head>
+<body>
 </body>
 </html>
 
