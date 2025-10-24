@@ -11,7 +11,7 @@ export default function App() {
   return (
     <>
       <ServiceWorkerRegistration />
-      <Router>
+      <Router basename="/Bonsaicopy">
         <ScrollToTop />
         <div className="min-h-screen bg-background">
           <Routes>
