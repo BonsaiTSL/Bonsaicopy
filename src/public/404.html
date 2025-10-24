@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <script>
-      // Redirect to index.html with the path stored in sessionStorage
-      // Automatically detect the base path from the current location
-      sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
-      
-      // Get the base path by finding where /404.html is located
-      const currentPath = location.pathname;
-      const basePath = currentPath.substring(0, currentPath.lastIndexOf('/404.html'));
-      
-      // Redirect to the base path (root of the app)
-      location.replace(basePath || '/');
-    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
-  </head>
-  <body>
-    Redirecting...
-  </body>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        h1 { color: #333; }
+        p { color: #666; }
+    </style>
+</head>
+<body>
+    <p>Redirecting...</p>
+    <script>
+        // Store the requested path for React Router to handle after redirect
+        var path = window.location.pathname;
+        sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
+        
+        // Redirect to the base path
+        var basePath = '/bonsai-site/';
+        window.location.replace(basePath);
+    </script>
+</body>
 </html>
+
