@@ -426,8 +426,10 @@ jobs:
 
       - name: Build
         env:
-          # Auto-detect repository name for GitHub Pages subdirectory deployment
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          # Auto-detect deployment type:
+          # - If CNAME exists (custom domain): use root path '/'
+          # - If no CNAME (GitHub Pages subdirectory): use '/{repo-name}/'
+          VITE_BASE_PATH: ${{ hashFiles('CNAME') != '' && '/' || format('/{0}/', github.event.repository.name) }}
         run: npm run build
 
       - name: Setup Pages
@@ -491,24 +493,28 @@ jobs:
 
 If deploying to a custom domain (e.g., `yourdomain.com`):
 
-1. **Update the workflow** - Remove the `VITE_BASE_PATH` from `.github/workflows/deploy.yml`:
-   ```yaml
-   - name: Build
-     run: npm run build  # Remove env section
+1. **Configure custom domain:**
+   - Go to Settings → Pages
+   - Add your custom domain under "Custom domain"
+   - GitHub will automatically create a `CNAME` file in your repository root
+   - Configure DNS as per GitHub's instructions
+
+2. **Push the CNAME file:**
+   ```bash
+   git pull  # Pull the CNAME file GitHub created
+   git push  # Triggers rebuild with automatic root path detection
    ```
 
-2. **Configure custom domain:**
-   - Go to Settings → Pages
-   - Add your custom domain
-   - Configure DNS as per GitHub's instructions
+**That's it!** The workflow automatically detects the `CNAME` file and uses root path (`/`) instead of the subdirectory path. No manual workflow changes needed!
 
 ## Key Features
 
 ✅ **Repository Portable** - Works with any repository name, no hardcoded paths  
-✅ **Auto-Detection** - GitHub Actions automatically detects repo name  
+✅ **Auto-Detection** - GitHub Actions automatically detects repo name and custom domain  
+✅ **Smart CNAME Detection** - Automatically uses root path when custom domain is configured  
 ✅ **PWA Support** - Full Progressive Web App with offline capabilities  
 ✅ **Client-Side Routing** - React Router works with direct URL access  
-✅ **Custom Domain Ready** - Easy switch between subdirectory and custom domain  
+✅ **Zero Configuration** - No manual workflow changes needed for custom domains  
 ✅ **TypeScript** - Full type safety for Vite environment variables  
 
 ## Troubleshooting

@@ -33,9 +33,10 @@ jobs:
 
       - name: Build
         env:
-          # Auto-detect repository name for GitHub Pages subdirectory deployment
-          # Extracts 'RepoName' from 'owner/RepoName'
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          # Auto-detect deployment type:
+          # - If CNAME exists (custom domain): use root path '/'
+          # - If no CNAME (GitHub Pages subdirectory): use '/{repo-name}/'
+          VITE_BASE_PATH: ${{ hashFiles('CNAME') != '' && '/' || format('/{0}/', github.event.repository.name) }}
         run: npm run build
 
       - name: Setup Pages
