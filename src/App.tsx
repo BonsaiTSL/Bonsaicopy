@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import ScrollToTop from './components/ScrollToTop';
 import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 import Home from './components/Home';
@@ -14,6 +15,7 @@ export default function App() {
     <>
       <ServiceWorkerRegistration />
       <Router basename={basename}>
+        <RedirectHandler />
         <ScrollToTop />
         <div className="min-h-screen bg-background">
           <Routes>
@@ -29,4 +31,21 @@ export default function App() {
       </Router>
     </>
   );
+}
+
+// Component to handle 404.html redirects from GitHub Pages
+function RedirectHandler() {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const redirectPath = sessionStorage.getItem('redirectPath');
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectPath');
+      // Remove the basename from the path before navigating
+      const cleanPath = redirectPath.replace('/Bonsaicopy', '');
+      navigate(cleanPath, { replace: true });
+    }
+  }, [navigate]);
+  
+  return null;
 }

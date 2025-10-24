@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // Redirect to index.html with the path stored in sessionStorage
+      sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
+      location.replace('/Bonsaicopy/');
+    </script>
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
+
