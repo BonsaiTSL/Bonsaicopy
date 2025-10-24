@@ -4,10 +4,11 @@
   import path from 'path';
 
 export default defineConfig(({ mode }) => {
-  // Use VITE_BASE_PATH env variable, or default based on mode
-  // For custom domain: set VITE_BASE_PATH='/' when building
-  // For GitHub Pages subdirectory: set VITE_BASE_PATH='/Bonsaicopy/' or leave unset
-  const base = process.env.VITE_BASE_PATH || (mode === 'production' ? '/Bonsaicopy/' : '/');
+  // Use VITE_BASE_PATH env variable, or default to root path
+  // For GitHub Pages: VITE_BASE_PATH is auto-set by GitHub Actions using repo name
+  // For custom domain: defaults to '/' (root)
+  // For local development: uses '/' (root)
+  const base = process.env.VITE_BASE_PATH || '/';
   
   return {
   base,

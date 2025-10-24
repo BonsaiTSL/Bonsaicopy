@@ -15,11 +15,11 @@ Run `npm run preview` to preview the production build locally.
 
 ## Deployment
 
-This site is configured to work on multiple domains and paths automatically.
+This site is configured to work on any repository name, custom domain, or subdirectory - **completely automatically!**
 
-### GitHub Pages Subdirectory (Default)
+### GitHub Pages Subdirectory (Automatic)
 
-Deploys to: `https://[your-username].github.io/Bonsaicopy/`
+Deploys to: `https://[your-username].github.io/[repo-name]/`
 
 1. Go to your repository settings on GitHub
 2. Navigate to **Settings** → **Pages**
@@ -27,35 +27,40 @@ Deploys to: `https://[your-username].github.io/Bonsaicopy/`
 4. Push your changes to the `main` branch
 5. The site will be automatically deployed
 
-**No additional configuration needed** - the default build uses `/Bonsaicopy/` as the base path.
+**✨ Zero configuration needed!** The GitHub Actions workflow automatically detects your repository name and configures the base path. Works with any repo name, even if you rename it or clone the repo!
 
 ### Custom Domain at Root
 
 Deploys to: `https://yourdomain.com/`
 
-To deploy to a custom domain at the root path:
-
-1. Create a `.env` file in the project root:
-```bash
-VITE_BASE_PATH=/
-```
-
-2. Update `.github/workflows/deploy.yml` to use the environment variable:
+1. Configure your custom domain in GitHub Pages settings (Settings → Pages → Custom domain)
+2. Update `.github/workflows/deploy.yml` and remove the VITE_BASE_PATH environment variable:
 ```yaml
 - name: Build
-  run: VITE_BASE_PATH=/ npm run build
+  run: npm run build  # Remove env section
 ```
 
-3. Configure your custom domain in GitHub Pages settings
+That's it! The site will automatically work at the root of your custom domain.
+
+### Cloning for a New Project
+
+This template is fully portable! When you clone or fork this repo:
+
+1. **Rename the repository** to anything you want
+2. Push to GitHub
+3. Enable GitHub Pages (Settings → Pages → Source: GitHub Actions)
+4. Done! It automatically works with your new repo name
+
+No need to search and replace "Bonsaicopy" anywhere - it's all dynamic!
 
 ### How It Works
 
-The site automatically detects its deployment environment:
+The site intelligently adapts to its environment:
 
-- **Base Path**: Configured in `vite.config.ts` using `VITE_BASE_PATH` environment variable
-- **Default Development**: Uses `/` for local development
-- **Default Production**: Uses `/Bonsaicopy/` for GitHub Pages subdirectory
-- **Custom Deployment**: Set `VITE_BASE_PATH=/` for root domain deployment
+- **GitHub Actions**: Auto-detects repository name from `github.event.repository.name`
+- **Base Path**: Automatically set to `/[repo-name]/` for GitHub Pages subdirectories
+- **Custom Domain**: Defaults to `/` (root) when no environment variable is set
+- **Local Development**: Always uses `/` (root) for localhost
 
-All paths (manifest, service worker, routing, 404 redirects) automatically adjust to work on any domain or subdirectory!
+All paths (manifest, service worker, routing, 404 redirects) dynamically adjust to work anywhere!
   
