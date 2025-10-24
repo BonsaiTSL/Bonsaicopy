@@ -225,16 +225,30 @@ Empty file (prevents GitHub Pages from ignoring underscore-prefixed files)
   <head>
     <meta charset="UTF-8" />
     <script>
-      // Redirect to index.html with the path stored in sessionStorage
-      // Automatically detect the base path from the current location
-      sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
+      // Store the requested path for React Router to handle after redirect
+      var path = window.location.pathname;
+      sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
       
-      // Get the base path by finding where /404.html is located
-      const currentPath = location.pathname;
-      const basePath = currentPath.substring(0, currentPath.lastIndexOf('/404.html'));
+      // Extract base path from URL
+      // For GitHub Pages subdirectory: /repo-name/some-route → redirect to /repo-name/
+      // For custom domain: /some-route → redirect to /
+      var segments = path.split('/').filter(function(segment) { return segment !== ''; });
       
-      // Redirect to the base path (root of the app)
-      location.replace(basePath || '/');
+      // If we have segments, assume first segment is the repo name (for GitHub Pages subdirectory)
+      var basePath = segments.length > 0 && !window.location.hostname.includes('localhost')
+        ? '/' + segments[0] + '/'
+        : '/';
+      
+      // For custom domains (no subdirectory), redirect to root
+      if (window.location.hostname !== window.location.hostname.replace(/\.github\.io$/, '')) {
+        // It's a custom domain if hostname doesn't end with .github.io
+        basePath = '/';
+      } else if (window.location.hostname.endsWith('.github.io') && segments.length > 0) {
+        // It's GitHub Pages subdirectory deployment
+        basePath = '/' + segments[0] + '/';
+      }
+      
+      window.location.replace(basePath);
     </script>
     <title>Redirecting...</title>
   </head>
