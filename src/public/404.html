@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Bonsai</title>
     <script>
-      console.log('404.html script executing');
-      console.log('Current URL:', window.location.href);
-      console.log('Pathname:', window.location.pathname);
-      
-      // Store the requested path for React Router to handle after redirect
-      var path = window.location.pathname;
-      sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
-      
-      // For GitHub Pages subdirectory deployment, redirect to /bonsai-site/
-      var basePath = '/bonsai-site/';
-      
-      console.log('Redirecting to:', basePath);
-      window.location.replace(basePath);
+        // Store the requested path for React Router to handle after redirect
+        var path = window.location.pathname;
+        sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
+        
+        // Redirect to the base path
+        var basePath = '/bonsai-site/';
+        window.location.replace(basePath);
     </script>
-    <title>Redirecting...</title>
-  </head>
-  <body>
-    Redirecting...
-  </body>
+</head>
+<body>
+    <h1>Page Not Found</h1>
+    <p>Redirecting...</p>
+</body>
 </html>
 
