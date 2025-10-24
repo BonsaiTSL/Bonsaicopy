@@ -1,6 +1,6 @@
 # GitHub Pages Deployment Guide
 
-This guide documents all changes needed to deploy a Vite + React + TypeScript application to GitHub Pages with full PWA support, dynamic routing, and repository portability.
+This guide documents all changes needed to deploy a Vite + React + TypeScript application developed using Figma Make to GitHub Pages with full PWA support, dynamic routing, and repository portability.
 
 ## Prerequisites
 

@@ -1,7 +1,7 @@
 
-# Bonsai (Copy)
+# Bonsai Brand Website
 
-This is a code bundle for Bonsai (Copy). The original project is available at https://www.figma.com/design/Di3JgV3LTTJ6FxpbLzb0lA/Bonsai--Copy-.
+This repo provides a full setup for a GitHub Pages hosted React website. If you are using Figma Make to build your website then specific instructions to adapt the generated code to a version that is compatible with GitHub Pages is available within the [GITHUB-PAGES.md](GITHUB-PAGES.md) file.
 
 ## Running the code
 
