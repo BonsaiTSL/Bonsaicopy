@@ -3,30 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <script>
+      console.log('404.html script executing');
+      console.log('Current URL:', window.location.href);
+      console.log('Pathname:', window.location.pathname);
+      
       // Store the requested path for React Router to handle after redirect
       var path = window.location.pathname;
       sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
       
-      // Extract base path from URL
-      // For GitHub Pages subdirectory: /repo-name/some-route → redirect to /repo-name/
-      // For custom domain: /some-route → redirect to /
-      var segments = path.split('/').filter(function(segment) { return segment !== ''; });
+      // For GitHub Pages subdirectory deployment, redirect to /bonsai-site/
+      var basePath = '/bonsai-site/';
       
-      // If we have segments, assume first segment is the repo name (for GitHub Pages subdirectory)
-      // This handles both github.io/repo-name/route and custom-domain.com/route
-      var basePath = segments.length > 0 && !window.location.hostname.includes('localhost')
-        ? '/' + segments[0] + '/'
-        : '/';
-      
-      // For custom domains (no subdirectory), redirect to root
-      if (window.location.hostname !== window.location.hostname.replace(/\.github\.io$/, '')) {
-        // It's a custom domain if hostname doesn't end with .github.io
-        basePath = '/';
-      } else if (window.location.hostname.endsWith('.github.io') && segments.length > 0) {
-        // It's GitHub Pages subdirectory deployment
-        basePath = '/' + segments[0] + '/';
-      }
-      
+      console.log('Redirecting to:', basePath);
       window.location.replace(basePath);
     </script>
     <title>Redirecting...</title>
