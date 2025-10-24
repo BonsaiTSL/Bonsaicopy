@@ -491,20 +491,51 @@ jobs:
 
 ### GitHub Pages Setup
 
-1. **Commit all changes:**
+#### Option A: Empty Repository Setup (Recommended)
+
+If you're starting with an empty repository:
+
+1. **Enable GitHub Pages first:**
+   - Go to repository **Settings** → **Pages**
+   - Under **Source**, select **GitHub Actions**
+   - This creates the necessary Pages environment
+
+2. **Commit and push your code:**
    ```bash
    git add .
    git commit -m "Configure for GitHub Pages deployment"
    git push origin main
    ```
 
-2. **Enable GitHub Pages:**
+3. **Access your site:**
+   - Site will be available at: `https://[username].github.io/[repo-name]/`
+   - The workflow will automatically trigger and deploy
+
+#### Option B: Initial Commit Before Pages Setup
+
+If you've already made your initial commit (e.g., using GitHub Desktop) before configuring GitHub Pages:
+
+1. **Enable GitHub Pages:**
    - Go to repository **Settings** → **Pages**
    - Under **Source**, select **GitHub Actions**
-   - Wait for the workflow to complete
+
+2. **Trigger deployment** (choose one method):
+
+   **Method 1 - Manual Trigger:**
+   - Go to **Actions** tab
+   - Click **"Run workflow"** button
+   - Wait for deployment to complete
+
+   **Method 2 - Empty Commit:**
+   ```bash
+   git commit --allow-empty -m "Trigger GitHub Pages deployment"
+   git push origin main
+   ```
 
 3. **Access your site:**
    - Site will be available at: `https://[username].github.io/[repo-name]/`
+
+**Why this step is needed:** GitHub Pages requires manual configuration before the workflow can deploy. The initial workflow run will fail until Pages is configured.
 
 ### For Custom Domain
 

@@ -21,11 +21,20 @@ This site is configured to work on any repository name, custom domain, or subdir
 
 Deploys to: `https://[your-username].github.io/[repo-name]/`
 
+**If starting with an empty repository:**
 1. Go to your repository settings on GitHub
 2. Navigate to **Settings** → **Pages**
 3. Under **Source**, select **GitHub Actions**
 4. Push your changes to the `main` branch
 5. The site will be automatically deployed
+
+**If you've already made your initial commit:**
+1. Configure GitHub Pages (Settings → Pages → Source: GitHub Actions)
+2. Either click "Run workflow" in the Actions tab, or run:
+   ```bash
+   git commit --allow-empty -m "Trigger GitHub Pages deployment"
+   git push origin main
+   ```
 
 **✨ Zero configuration needed!** The GitHub Actions workflow automatically detects your repository name and configures the base path. Works with any repo name, even if you rename it or clone the repo!
 
