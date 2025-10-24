@@ -5,6 +5,7 @@
 
 export default defineConfig(({ mode }) => ({
   base: mode === 'production' ? '/Bonsaicopy/' : '/',
+  publicDir: 'src/public',
   plugins: [react()],
   resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
