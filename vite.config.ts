@@ -62,6 +62,12 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext',
       outDir: 'build',
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          notFound: path.resolve(__dirname, 'src/public/404.html')
+        }
+      }
     },
   server: {
     port: 3000,
